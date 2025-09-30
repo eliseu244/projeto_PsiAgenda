@@ -1,0 +1,16 @@
+// componentes responsaveis por emitir notificações a biblioteca react-hot-tost
+import { AuthProvider } from "./context/AuthContext";
+// importação do arquivo authProvider responsavel pela autentição do usuarios e controle de rotas privadas
+ 
+// importação do appRoutes componente de gerenciamento de rotas
+import { AppRoutes } from "./routes/AppRoutes";
+ 
+// construção codigo principal
+function App(){
+  return(
+    <AuthProvider>
+      <AppRoutes/>
+    </AuthProvider>
+  )
+}
+export default App;
