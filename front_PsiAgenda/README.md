@@ -2,7 +2,7 @@
  
 Sistema web moderno para gestão de consultas psicológicas, desenvolvido com React 19 + Vite, focado em atendimentos voluntários em universidades, ONGs e projetos sociais.
  
-![Cuide+ Logo](public/logo.png)
+![PsiAgenda Logo](public/logo.png)
  
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
 [![React](https://img.shields.io/badge/React-19.1.1-61dafb.svg)](https://reactjs.org/)
@@ -97,7 +97,7 @@ O **Cuide+** é uma plataforma web desenvolvida para facilitar o agendamento e g
  
 1. **Clone o repositório**
 ```bash
-git clone https://github.com/seu-usuario/sistema-agendamento-psicologico.git
+git clone https://github.com/eliseu244/projeto_PsiAgenda
 cd sistema-agendamento-psicologico
 ```
  
@@ -151,40 +151,43 @@ http://localhost:5173
  
 ```
 src/
-├── components/          # Componentes reutilizáveis
-│   ├── Button.jsx      # Botão customizado com variantes
-│   ├── Card.jsx        # Container com glassmorphism
-|   ├── Footer.jsx        # Container footer
-│   ├── Input.jsx       # Input com validação e show/hide password
-│   ├── LoadingSpinner.jsx # Spinner de carregamento
+├── components/              # Componentes reutilizáveis
+│   ├── Button.jsx           # Botão customizado com variantes
+│   ├── Card.jsx             # Container com glassmorphism
+│   ├── FormSelect.jsx       # Select customizado
+│   ├── Input.jsx            # Input com validação e show/hide password
+│   ├── KPICard.jsx          # Card de KPI (ex: sessões, pacientes)
+│   ├── LoadingSpinner.jsx   # Spinner de carregamento
 │   ├── MarkdownRenderer.jsx # Renderizador de markdown para IA
-│   ├── Modal.jsx       # Modal responsivo com overlay
-│   ├── PublicNavbar.jsx # Navbar para páginas públicas
-│   └── Sidebar.jsx     # Sidebar adaptativa para usuários autenticados
-├── context/            # Contextos React
-│   └── AuthContext.jsx # Contexto de autenticação
-├── pages/              # Páginas da aplicação
-│   ├── About.jsx       # Página sobre o projeto
-│   ├── Agendamento.jsx # Sistema de agendamento (pacientes)
-│   ├── ChatIA.jsx      # Chat com IA especializada (psicólogos)
-│   ├── DashboardPaciente.jsx # Dashboard para pacientes
-│   ├── DashboardPsicologo.jsx # Dashboard para psicólogos
-│   ├── Home.jsx        # Página inicial pública
-│   ├── Login.jsx       # Login padrão
-│   ├── NotFound.jsx    # Página 404 personalizada
+│   ├── PublicNavbar.jsx     # Navbar para páginas públicas
+│   ├── Sidebar.jsx          # Sidebar adaptativa para usuários autenticados
+│   ├── TextArea.jsx         # Campo de texto multilinha com estilização
+│   ├── TextBlock.jsx        # Bloco de texto com título e conteúdo
+│   └── Footer.jsx           # Rodapé da aplicação
+├── context/                 # Contextos React
+│   └── AuthContext.jsx      # Contexto de autenticação
+├── pages/                   # Páginas da aplicação
+│   ├── About.jsx            # Página sobre o projeto
+│   ├── Agendamentos.jsx     # Sistema de agendamento (pacientes)
+│   ├── ChatIA.jsx           # Chat com IA especializada (psicólogos)
+│   ├── DashboardPaciente.jsx# Dashboard para pacientes
+│   ├── DashboardPsicologo.jsx# Dashboard para psicólogos
+│   ├── Home.jsx             # Página inicial pública
+│   ├── Login.jsx            # Login padrão
+│   ├── NotFound.jsx         # Página 404 personalizada
 │   ├── PacienteDetalhes.jsx # Detalhes e histórico do paciente
-│   ├── Pacientes.jsx   # Lista de pacientes (psicólogos)
-│   ├── Register.jsx    # Cadastro de usuários
-│   ├── Relatorios.jsx  # Relatórios e analytics (psicólogos)
-│   └── -SessaoDetalhes.jsx # Detalhes e gestão de sessões
-├── routes/             # Configuração de rotas
-│   └── AppRoutes.jsx   # Rotas principais
-├── services/           # Serviços e APIs
-│   ├── aiService.js    # Serviço de IA
-│   └── mockApi.js      # API mockada
-├── App.jsx             # Componente principal
-├── index.css           # Estilos globais Tailwind
-└── main.jsx            # Entry point
+│   ├── Pacientes.jsx        # Lista de pacientes (psicólogos)
+│   ├── Register.jsx         # Cadastro de usuários
+│   ├── Relatorios.jsx       # Relatórios e analytics (psicólogos)
+│   └── SessaoDetalhes.jsx   # Detalhes e gestão de sessões
+├── routes/                  # Configuração de rotas
+│   └── AppRoutes.jsx        # Rotas principais protegidas/públicas
+├── services/                # Serviços e APIs
+│   ├── aiService.js         # Serviço de IA
+│   └── mockApi.js           # API mockada
+├── App.jsx                  # Componente principal da aplicação
+├── index.css                # Estilos globais (Tailwind)
+└── main.jsx                 # Entry point da aplicação
 ```
  
 ## 🔌 API Mock
@@ -285,11 +288,11 @@ Os dados são armazenados no `localStorage` do navegador:
  
 ```css
 :root {
-  --dark: #010440;      /* Azul escuro principal */
-  --medium: #024873;    /* Azul médio */
-  --light: #2493BF;     /* Azul claro */
-  --accent: #26B0BF;    /* Azul accent */
-  --background: #F2EFE9; /* Bege claro */
+  --color-dark: #1B8387;       /* Azul bem escuro */
+  --color-medium: #A5D9D2;     /* Azul médio */
+  --color-light: #A5D9D2;      /* Azul claro */
+  --color-accent: #26B0BF;     /* Azul/acento esverdeado */
+  --color-background: #A5D9D2; /* Bege claro para fundo */
 }
 ```
  
@@ -383,18 +386,19 @@ Indicador de carregamento com tamanhos variados.
 ### Rotas Públicas
 - `/` - Página inicial
 - `/about` - Sobre o projeto
-- `/login` - Login padrão
+- `/login` - Login padrão    - `/chat-ia` - Chat com IA (apenas psicólogos)
 - `/lunysse` - Login moderno
-- `/register` - Cadastro
+- `/register` - Cadastro    - `/pacientes` - Lista de pacientes (apenas psicólogos)
  
 ### Rotas Protegidas
 - `/dashboard` - Dashboard (redireciona por tipo de usuário)
 - `/agendamento` - Agendamento (apenas pacientes)
-- `/pacientes` - Lista de pacientes (apenas psicólogos)
-- `/pacientes/:id` - Detalhes do paciente
-- `/sessao/:sessionId` - Detalhes da sessão
 - `/chat-ia` - Chat com IA (apenas psicólogos)
+- `/solicitacoes` - solicitacoes (apenas psicólogos)
+- `/pacientes` - Pacientes (apenas psicólogos)
+- `/pacientes/:id` - Detalhes do paciente
 - `/relatorios` - Relatórios (apenas psicólogos)
+- `/sessao/:sessionId` - Detalhes da sessão
  
 ### Proteção de Rotas
  
